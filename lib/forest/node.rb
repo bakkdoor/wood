@@ -197,7 +197,12 @@ end
 
 # sexp methods for core classes
 
-[Symbol, String, Numeric, NilClass, TrueClass, FalseClass, Regexp].each do |c|
+BuiltinNodeClasses = [
+  Symbol, String, Regexp, Numeric,
+  NilClass, TrueClass, FalseClass
+]
+
+BuiltinNodeClasses.each do |c|
   c.class_eval do
     def sexp
       self
