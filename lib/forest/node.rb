@@ -34,7 +34,7 @@ module Forest
       def node_name(node_name = nil)
        @__node_name__ = node_name if node_name
         unless @__node_name__
-          camel_cased = (name.split("::") - node_name_prefix).join
+          camel_cased = (name.split("::") - node_name_prefix.split("::")).join
           @__node_name__ = camel_cased.snake_cased.to_sym
         end
         @__node_name__
@@ -52,7 +52,7 @@ module Forest
 
     def self.inherited(klass)
       klass.extend ClassMethods
-      klass.node_name_prefix = ["Forest", "Nodes"]
+      klass.node_name_prefix = "Forest::Nodes"
       klass.__send__ :include, ::Forest::TreePattern::CombinatorialMatching
       klass.extend ::Forest::TreePattern::CombinatorialMatching
     end
