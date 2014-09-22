@@ -13,13 +13,13 @@ describe String do
   end
 
   it "returns true if it is capitalized" do
-    "".capitalized?.should be_false
-    "foo".capitalized?.should be_false
-    "fFoo".capitalized?.should be_false
+    "".capitalized?.should be_falsey
+    "foo".capitalized?.should be_falsey
+    "fFoo".capitalized?.should be_falsey
 
-    "_".capitalized?.should be_true
-    "F".capitalized?.should be_true
-    "Foo".capitalized?.should be_true
-    "FFoo".capitalized?.should be_true
+    "_".capitalized?.should be_truthy
+    "F".capitalized?.should be_truthy
+    "Foo".capitalized?.should be_truthy
+    "FFoo".capitalized?.should be_truthy
   end
 end

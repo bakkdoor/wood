@@ -3,13 +3,13 @@ describe Forest::Nodes::Operator do
 
   it "is boolean" do
     Operator::BOOL_OPS.each do |name|
-      Operator[name: name].boolean?.should be_true
+      Operator[name: name].boolean?.should be_truthy
     end
   end
 
   it "it is not boolean" do
     Operator::NON_BOOL_OPS.each do |name|
-      Operator[name: name].boolean?.should be_false
+      Operator[name: name].boolean?.should be_falsey
     end
   end
 

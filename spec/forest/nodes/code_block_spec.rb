@@ -2,7 +2,7 @@ describe Forest::Nodes::CodeBlock do
   it "defaults to an empty array of expressions" do
     CodeBlock[].expressions.should be_empty
     CodeBlock[].should be_empty
-    CodeBlock[].empty?.should be_true
+    CodeBlock[].empty?.should be_truthy
   end
 
   it "behaves as an Enumerable and forward delegates #each" do

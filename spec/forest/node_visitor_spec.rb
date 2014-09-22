@@ -37,7 +37,7 @@ describe Forest::NodeVisitor do
   end
 
   it "ignores specified nodes" do
-    @v.visit(@node.new("node_c")).ignored.should be_true
-    @v.visit(@node.new("node_d")).ignored.should be_true
+    @v.visit(@node.new("node_c")).ignored.should be_truthy
+    @v.visit(@node.new("node_d")).ignored.should be_truthy
   end
 end
