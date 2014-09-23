@@ -20,6 +20,10 @@ module Wood
 
     Context = Struct.new(:ignored)
 
+    def new_context
+      Context.new(false)
+    end
+
     def contexts
       @contexts ||= []
     end
@@ -29,9 +33,22 @@ module Wood
     end
 
     def visit(node)
-      contexts.push Context.new(false)
+      contexts.push new_context
        __send__(node.node_name, node)
       contexts.pop
+    end
+
+    def visit_type(node)
+      case node.type
+      when Wood::Types::BuiltinType
+        visit node.type
+      when Wood::Types::CompoundType
+        visit node.type
+      when Wood::Types::CustomType
+        visit node.type
+      else
+        visit node.type.type if node.type
+      end
     end
 
     def array(nodes)
