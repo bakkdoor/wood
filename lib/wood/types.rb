@@ -195,7 +195,8 @@ module Wood
       end
 
       def node_name
-        (Array(name).map(&:to_s).join("_") + "_type").snake_cased.to_sym
+        @node_name ||=
+          (Array(name).map(&:to_s).join("_") + "_type").snake_cased.to_sym
       end
 
       def == other
