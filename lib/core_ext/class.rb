@@ -1,12 +1,9 @@
 class Class
-  def delegate(options)
-    methods = options[:methods]
-    target  = options[:to]
-
+  def delegate(methods:, to:)
     code = methods.map do |method|
       "
       def #{method}(*args, &block)
-        #{target}.#{method}(*args, &block)
+        #{to}.#{method}(*args, &block)
       end
       "
     end.join("\n")
