@@ -1,3 +1,5 @@
+require "set"
+
 module Wood
   module Types
     module TypeMatching
