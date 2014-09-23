@@ -10,3 +10,4 @@ require_relative "wood/nodes"
 require_relative "wood/types"
 
 require_relative "wood/indented_printer"
+require_relative "wood/version"
