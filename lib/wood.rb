@@ -8,3 +8,5 @@ require_relative "wood/tree_rewriter"
 require_relative "wood/nodes"
 
 require_relative "wood/types"
+
+require_relative "wood/indented_printer"
