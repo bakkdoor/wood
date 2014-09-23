@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "wood"
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.authors = ["Christopher Bertels"]
   s.date = "2014-09-23"
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
 Wood is a library for creating, manipulating and rewriting trees,
 in particular Abstract Syntax Trees (ASTs).
 
-It provides an easy to use DSL for searching & rewriting whole sub-trees
+It provides an easy to use DSL for searching and rewriting whole sub-trees
 in place, which can be used for things like translating a parse tree into a
 target language tree, doing type analysis, writing compiler optimization passes
 and more.
