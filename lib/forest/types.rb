@@ -273,11 +273,25 @@ module Forest
       end
     end
 
+    class AnyType < BuiltinType
+      def initialize(name, *aliases)
+        super(name, false, *aliases)
+      end
+
+      def == other
+        true
+      end
+
+      def === other
+        true
+      end
+    end
+
 
     NUMERIC_TYPES     = Set.new
     NON_NUMERIC_TYPES = Set.new
 
-    Any               = BuiltinType.new :any
+    Any               = AnyType.new :Any, :any, :Object, :object
     Int               = NumericType.new :int
     Float             = NumericType.new :float
     Short             = NumericType.new :short
