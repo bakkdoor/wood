@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.0.0'
 
   s.description = <<EOS
-Wood is a library for creating, manipulating & rewriting trees,
+Wood is a library for creating, manipulating and rewriting trees,
 in particular Abstract Syntax Trees (ASTs).
 
 It provides an easy to use DSL for searching & rewriting whole sub-trees
