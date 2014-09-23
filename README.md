@@ -5,8 +5,8 @@ in particular Abstract Syntax Trees (ASTs).
 
 Wood was extracted from a source to source compiler project I worked on for
 Marft Inc. in 2013/14.
-Marft has granted me the rights to open source this library, so I'm releasing
-it under the 3-Clause BSD license (see LICENSE file).
+Marft has granted me the rights to this library, so I'm releasing it under the
+3-Clause BSD license (see LICENSE file).
 
 The compiler that was built using this library (which was then called Forest)
 translated a subset of ANSI C to multiple target languages, including Java, C#
