@@ -53,8 +53,8 @@ module Forest
     def self.inherited(klass)
       klass.extend ClassMethods
       klass.node_name_prefix = "Forest::Nodes"
-      klass.__send__ :include, ::Forest::TreePattern::CombinatorialMatching
-      klass.extend ::Forest::TreePattern::CombinatorialMatching
+      klass.__send__ :include, Forest::TreePattern::CombinatorialMatching
+      klass.extend Forest::TreePattern::CombinatorialMatching
     end
 
     Position = Struct.new(:line, :column)
