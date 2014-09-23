@@ -1,5 +1,20 @@
 module Wood
   module TreeRewriter
+    class Rewriter
+      def initialize
+        self.class.patterns self
+      end
+
+      def self.inherited(klass)
+        klass.include Wood::TreePattern::Matcher
+        klass.include Wood::TreeRewriter
+      end
+    end
+
+    def self.new(&block)
+      Class.new(Rewriter, &block).new
+    end
+
     module ClassMethods
       def patterns(*patterns)
         @patterns ||= []
