@@ -229,6 +229,19 @@ class Array
     end
   end
 
+  def === other
+    case other
+    when Array
+      self.each_with_index do |x, i|
+        return false unless x === other[i]
+      end
+    else
+      return false
+    end
+
+    return true
+  end
+
   def child_nodes
     self
   end
