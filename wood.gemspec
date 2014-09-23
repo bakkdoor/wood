@@ -6,9 +6,9 @@ Gem::Specification.new do |s|
   s.date = "2014-09-23"
   s.email = "chris@fancy-lang.org"
 
-  files =
-    ["README.md", "LICENSE", "Rakefile",
-    Dir.glob("lib/**/*.fy") + Dir.glob("lib/parser/ext/**/*") +
+  files = ["README.md", "LICENSE", "Rakefile", "Gemfile"] +
+    Dir.glob("lib/**/*.rb") +
+    Dir.glob("spec/**/*.rb") +
     Dir.glob("examples/**/*.rb")
 
   s.files = files
