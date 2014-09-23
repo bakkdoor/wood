@@ -1,3 +1,3 @@
-require_relative "../lib/forest"
+require_relative "../lib/wood"
 
-include Forest
+include Wood
