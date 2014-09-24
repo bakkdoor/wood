@@ -25,4 +25,38 @@ module Wood::Nodes
       end
     end
   end
+
+  class NumericOperator < Operator
+    def boolean?
+      false
+    end
+  end
+
+  class Plus < NumericOperator
+    def setup
+      super
+      @name = :+
+    end
+  end
+
+  class Minus < NumericOperator
+    def setup
+      super
+      @name = :-
+    end
+  end
+
+  class Multiply < NumericOperator
+    def setup
+      super
+      @name = :*
+    end
+  end
+
+  class Divide < NumericOperator
+    def setup
+      super
+      @name = :/
+    end
+  end
 end
