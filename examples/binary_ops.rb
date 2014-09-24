@@ -11,16 +11,16 @@ class BinaryOperator < Node
   child_nodes :left, :right
 end
 
-class PlusOperator < BinaryOperator
+class PlusOp < BinaryOperator
 end
 
-class MinusOperator < BinaryOperator
+class MinusOp < BinaryOperator
 end
 
-class MultiplyOperator < BinaryOperator
+class MultiplyOp < BinaryOperator
 end
 
-class DivideOperator < BinaryOperator
+class DivideOp < BinaryOperator
 end
 
 class NumberLiteral < Wood::Node
@@ -28,42 +28,36 @@ class NumberLiteral < Wood::Node
 end
 
 RedundantBinaryOpsRewriter = TreeRewriter.new do
-  Zero = IntLiteral[0]
+  ZERO = IntLiteral[0]
 
   pattern {
-    opts = { left: l, right: Zero }
-    PlusOperator[opts] | MinusOperator[opts]
+    opts = { left: l, right: ZERO }
+    PlusOp[opts] | MinusOp[opts]
   }.rewrite {
     l
   }
 
   pattern {
-    op = { left: Zero, right: r }
-    PlusOperator[op] | MinusOperator[op]
+    op = { left: ZERO, right: r }
+    PlusOp[op] | MinusOp[op]
   }.rewrite {
     r
   }
 
   pattern {
-    MultiplyOperator[left: Zero, right: _]
+    MultiplyOp[left: ZERO, right: _] | MultiplyOp[left: _, right: ZERO]
   }.rewrite {
-    Zero
+    ZERO
   }
 
   pattern {
-    MultiplyOperator[left: _, right: Zero]
-  }.rewrite {
-    Zero
-  }
-
-  pattern {
-    DivideOperator[left: _, right: Zero]
+    DivideOp[left: _, right: ZERO]
   }.perform {
     raise "Can't divide by zero. Fix this ASAP!"
   }
 
   pattern {
-    PlusOperator[left: IntLiteral[x], right: IntLiteral[y]]
+    PlusOp[left: IntLiteral[x], right: IntLiteral[y]]
   }.rewrite {
     if x == y
       IntLiteral[x * 2]
@@ -73,8 +67,8 @@ end
 
 # Now, let's use the rewriter:
 
-add_zero = PlusOperator[
-  left: MultiplyOperator[
+add_zero = PlusOp[
+  left: MultiplyOp[
     left:  IntLiteral[2],
     right: IntLiteral[0]
   ],
@@ -89,13 +83,13 @@ result2 = RedundantBinaryOpsRewriter.rewrite add_zero, true
 
 puts "Original AST:"
 pp add_zero
-# => [:plus_operator,
-#      [:multiply_operator, [:int_literal, 2], [:int_literal, 0]],
+# => [:plus_op,
+#      [:multiply_op, [:int_literal, 2], [:int_literal, 0]],
 #      [:int_literal, 0]]
 
 puts "\nAfter a single rewrite:"
 pp result1
-# => [:multiply_operator, [:int_literal, 2], [:int_literal, 0]]
+# => [:multiply_op, [:int_literal, 2], [:int_literal, 0]]
 
 puts "\nAfter all possible rewrites:"
 pp result2
@@ -103,9 +97,9 @@ pp result2
 
 # Let's let it crash by dividing by (static) 0 literal
 
-divide_by_zero = DivideOperator[
+divide_by_zero = DivideOp[
   left:  IntLiteral[10],
-  right: MultiplyOperator[
+  right: MultiplyOp[
     left:  IntLiteral[100],
     right: IntLiteral[0]
   ]
@@ -113,7 +107,7 @@ divide_by_zero = DivideOperator[
 
 puts "\nDivide by zero with 1 rewrite:"
 pp RedundantBinaryOpsRewriter.rewrite(divide_by_zero)
-# => [:divide_operator, [:int_literal, 10], [:int_literal, 0]]
+# => [:divide_op, [:int_literal, 10], [:int_literal, 0]]
 
 puts "\nDivide by zero with repeated rewrites fails:"
 begin
@@ -124,15 +118,15 @@ end
 # => #<RuntimeError: Can't divide by zero. Fix this ASAP!>
 
 puts "\nRewrite 2 + 2 => 4"
-pp RedundantBinaryOpsRewriter.rewrite(PlusOperator[
+pp RedundantBinaryOpsRewriter.rewrite(PlusOp[
   left: IntLiteral[2],
   right: IntLiteral[2]
 ])
 # => [:int_literal, 4]
 
 puts "\nDon't rewrite 3 + 2"
-pp RedundantBinaryOpsRewriter.rewrite(PlusOperator[
+pp RedundantBinaryOpsRewriter.rewrite(PlusOp[
   left: IntLiteral[3],
   right: IntLiteral[2]
 ])
-# => [:plus_operator, [:int_literal, 3], [:int_literal, 2]]
+# => [:plus_op, [:int_literal, 3], [:int_literal, 2]]
