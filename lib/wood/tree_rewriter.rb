@@ -1,6 +1,6 @@
 module Wood
   module TreeRewriter
-    class Rewriter
+    class MultiPatternRewriter
       def initialize
         self.class.patterns self
       end
@@ -12,7 +12,7 @@ module Wood
     end
 
     def self.new(&block)
-      Class.new(Rewriter, &block).new
+      Class.new(MultiPatternRewriter, &block).new
     end
 
     module ClassMethods

@@ -349,3 +349,55 @@ describe Wood::TreeRewriter do
     ast.should == target
   end
 end
+
+describe Wood::TreeRewriter::MultiPatternRewriter do
+  it "applies multiple TreeRewriter rules at once" do
+
+    rewriter = Wood::TreeRewriter.new do
+      ZERO = IntLiteral[0]
+
+      pattern {
+        Operator[name: :+, left: ZERO, right: r]
+      }.rewrite {
+        r
+      }
+
+      pattern {
+        Operator[name: :+, left: l, right: ZERO]
+      }.rewrite {
+        l
+      }
+
+      pattern {
+        Operator[name: :*, left: ZERO, right: _] |
+          Operator[name: :*, left: _, right: ZERO]
+      }.rewrite {
+        ZERO
+      }
+
+      pattern {
+        Operator[name: :+, left: IntLiteral[l], right: IntLiteral[r]]
+      }.rewrite {
+        if l == (-1 * r) # e.g. 2 + -2
+          IntLiteral[0]
+        end
+      }
+    end
+
+    ast = Operator[
+      name: :+,
+      left: Operator[
+        name: :*,
+        left: IntLiteral[10],
+        right: Operator[
+          name: :+,
+          left: IntLiteral[2],
+          right: IntLiteral[-2]
+        ]
+      ],
+      right: IntLiteral[100]
+    ]
+
+    rewriter.rewrite(ast, true).should == IntLiteral[100]
+  end
+end
