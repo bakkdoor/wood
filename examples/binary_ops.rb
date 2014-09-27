@@ -23,10 +23,6 @@ end
 class DivideOp < BinaryOperator
 end
 
-class NumberLiteral < Wood::Node
-  child_nodes :value
-end
-
 RedundantBinaryOpsRewriter = TreeRewriter.new do
   ZERO = IntLiteral[0]
 
